@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.UuidGenerator;
+import tablebook.backend.enums.Zone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +48,10 @@ public class RestaurantTable {
     @Column(name = "near_play_area")
     private boolean nearPlayArea;
 
-    @Column(name = "accessible")
-    private boolean accessible;
-
     @Column(name = "privacy")
     private boolean privacy;
+
+    @Column(name = "zone")
+    @Enumerated(EnumType.STRING)
+    private Zone zone;
 }

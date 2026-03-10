@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.UuidGenerator;
 import tablebook.backend.enums.UserRole;
+import tablebook.backend.enums.Zone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,11 @@ public class User {
     @NotBlank
     @Column(name = "username")
     private String username;
+
+    @NotBlank
+    @Column(name = "zone", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Zone Zone;
 
     @NotBlank
     @Column(name = "email", unique = true)

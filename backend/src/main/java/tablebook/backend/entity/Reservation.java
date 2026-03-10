@@ -25,6 +25,10 @@ public class Reservation {
     @ToString.Exclude
     private User user;
 
+    @NotNull
+    @Column(name = "people_count", nullable = false)
+    private int peopleCount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
     @JoinColumn(name = "table_id")
