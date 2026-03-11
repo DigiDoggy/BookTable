@@ -1,7 +1,7 @@
 ** 09.03
 # Work log
 
-See detailed booking rules in [booking-rules.md](./booking-rules.md).
+See detailed booking rules in [booking-rules.md](docs/booking-rules.md).
 
 ## Initial project setup
 
@@ -14,3 +14,12 @@ See detailed booking rules in [booking-rules.md](./booking-rules.md).
 # 10.03 
 
 - Refined booking requirements and added booking-rules.md based on common booking platform practices.
+- Thinking through possible recommendations for the client.
+
+# 11.03
+- Added logic for table occupancy.
+- Added recommendations for the client.
+- Added server response with restaurant load information.
+- Added table DTOs.
+
+//todo need to load tables into the database for testing

@@ -34,24 +34,31 @@ public class RestaurantTable {
     @Column(name = "capacity")
     private int capacity;
 
-    @NotNull
+    // Coordinates are not necessary for now. Will attach them later if needed.
+    //todo We should do it this way because it will make it easier to find recommendations.
+    // For example, if a table is occupied, we can look for a suitable nearby table.
     @Column(name = "x_position")
     private int xPosition;
 
-    @NotNull
     @Column(name = "y_position")
     private int yPosition;
 
     @Column(name = "near_window")
-    private boolean nearWindow;
+    private boolean isNearWindow;
 
     @Column(name = "near_play_area")
-    private boolean nearPlayArea;
+    private boolean isNearPlayArea;
 
     @Column(name = "privacy")
-    private boolean privacy;
+    private boolean isPrivacy;
+
+    @Column(name = "occupied")
+    private boolean isOccupied;
 
     @Column(name = "zone")
     @Enumerated(EnumType.STRING)
     private Zone zone;
+
+   private int score;
+
 }

@@ -14,7 +14,5 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
 
     public List<RestaurantTable> getRandomSeats() {
-
-
     }
 }

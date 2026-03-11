@@ -6,7 +6,6 @@ public enum Zone {
     OUTDOOR,
     BAR,
     LOUNGE,
-    KITCHEN,
     OTHER,
     CHILDREN_ZONE
 }
