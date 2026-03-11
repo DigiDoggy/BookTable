@@ -30,6 +30,9 @@ public class TableService {
         List<RestaurantTable> tables = tableRepository.findAll();
 
         List<RestaurantTable> freeTables = getFreeTables(request.time(), request.date(), tables);
+        // creating recommendation score for request
+        calculateRecommendationScore(freeTables, request);
+
         List<RestaurantTable> recommendationTables = getRecommendation(request.zone(), request.numberOfPeople(), freeTables);
         List<RestaurantTable> occupiedTables = getOccupiedTables(tables);
 
@@ -108,10 +111,12 @@ public class TableService {
                                                     int peopleCount,
                                                     List<RestaurantTable> tables) {
 
+
         return tables.stream()
                 .filter(table -> table.getZone().equals(zone))
                 .filter(table -> table.getCapacity() >= peopleCount)
-                .sorted(Comparator.comparingInt(RestaurantTable::getCapacity))
+                .sorted(Comparator.comparingInt(RestaurantTable::getScore).reversed()
+                        .thenComparing(RestaurantTable::getCapacity))
                 .limit(3)
                 .toList();
     }
@@ -125,6 +130,43 @@ public class TableService {
 
     //can implement if create logic of coordinate
     private int calculateRecommendationScore(List<RestaurantTable> tables, ClientRecommendationRequest request) {
+      for (RestaurantTable table : tables) {
+          int score = 0;
+
+          //cheking zone
+          if (request.zone() !=null && table.getZone().equals(request.zone())) {
+              score+=30;
+          }
+
+          // checking people count
+          int difference = request.numberOfPeople() - table.getCapacity();
+          if (difference <= 0) {
+              score+=10;
+              // - difference, like fine
+              score-=difference;
+          }else{
+              //  If there are no places,
+              //  then we remove it from the recommendations by rating
+              score-=100;
+          }
+
+          if (request.isNearWindow() && table.isNearWindow()) {
+              score += 10;
+          }
+          if (request.isNearPlayArea() && table.isNearPlayArea()) {
+              score += 10;
+          }
+          if (request.isPrivacy() && table.isPrivacy()) {
+              score += 10;
+          }
+
+          table.setScore(score);
+      }
+
+
+
         return 0;
+
+
     }
 }

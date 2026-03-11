@@ -49,6 +49,9 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
+    @Column(name = "preferences", nullable = false)
+    private String preferences;
+
     @PrePersist
     @PreUpdate
     private void updateReservationEndTime() {
