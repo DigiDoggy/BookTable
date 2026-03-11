@@ -19,6 +19,9 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class TableService {
+    // generate occupied tables only once
+    private boolean initialized = false;
+
     private final RestaurantTableRepository tableRepository;
 
     // that coming when user wrote date and time
@@ -54,6 +57,12 @@ public class TableService {
     //It depends on the booking time and date.
     private List<RestaurantTable> getFreeTables(LocalTime time, LocalDate date, List<RestaurantTable> tables) {
 
+        if (initialized) {
+            return tables.stream()
+                    .filter(table -> !table.isOccupied())
+                    .toList();
+        }
+
         float loadIndex;
 
         Random random = new Random();
@@ -87,8 +96,8 @@ public class TableService {
             tableRepository.save(table);
         }
 
-
-
+        // toggle initialized to true
+        initialized = true;
         return tables.stream()
                 .filter(table -> !table.isOccupied())
                 .toList();

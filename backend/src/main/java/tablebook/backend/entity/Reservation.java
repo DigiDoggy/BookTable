@@ -42,7 +42,23 @@ public class Reservation {
     @Column(name = "reservation_time", nullable = false)
     private LocalTime reservationTime;
 
+    @Column(name = "reservation_end_time", nullable = false)
+    private  LocalTime reservationEndTime;
+
     @Column(name = "reservation_status", nullable = false)
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
+
+    @PrePersist
+    @PreUpdate
+    private void updateReservationEndTime() {
+        if(reservationTime == null){
+            return ;
+        }
+        if(reservationTime.isBefore(LocalTime.of(17, 0))){
+            reservationEndTime = reservationTime.plusHours(2);
+        }else{
+            reservationEndTime = reservationTime.plusHours(6);
+        }
+    }
 }
