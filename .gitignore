@@ -32,3 +32,16 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Docker ###
+docker-compose.yaml
+Dockerfile
+
+###ignore ###
+.gitignore
+.dockerignore
+.env
+
+### Docs ###
+docker_learning.md
+

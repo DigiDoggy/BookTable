@@ -26,7 +26,7 @@ public class RestaurantTable {
     @Size(min = 1, max = 10)
     private String tableNumber;
 
-    @OneToMany(mappedBy = "tables", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "table", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Reservation> reservations = new ArrayList<>();
 

@@ -22,4 +22,12 @@ See detailed booking rules in [booking-rules.md](docs/booking-rules.md).
 - Added server response with restaurant load information.
 - Added table DTOs.
 
-//todo need to load tables into the database for testing
+
+# 20.04
+- Added reservation create request DTO.
+- Added reservation response DTO.
+- Added reservation creation endpoint and reservations fetching endpoint (by date / by table).
+- Updated reservation service with overlap checks and reservation end-time calculation.
+- Extended reservation repository with date and table+date queries.
+- Added Docker Compose setup for Postgres and app service.
+- Added Dockerfile placeholder for app containerization.

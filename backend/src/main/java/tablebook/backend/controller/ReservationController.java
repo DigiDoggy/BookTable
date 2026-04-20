@@ -2,21 +2,49 @@ package tablebook.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import tablebook.backend.dto.request.CreateReservationRequest;
+import tablebook.backend.dto.response.ReservationResponse;
 import tablebook.backend.entity.Reservation;
 import tablebook.backend.service.ReservationService;
 
-@Controller
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
+@RestController
 @RequestMapping("/reservations")
 @RequiredArgsConstructor
 public class ReservationController {
+
     private final ReservationService reservationService;
 
-    // we take random seats when reload page;
-    @GetMapping("/tables")
-    public ResponseEntity<Reservation> getTables() {
-        return ResponseEntity.ok(reservationService.getRandomSeats());
+    @PostMapping
+    public ResponseEntity<ReservationResponse> createReservation(@RequestBody CreateReservationRequest request) {
+        Reservation reservation = reservationService.createReservation(request);
+        return ResponseEntity.ok(ReservationResponse.from(reservation));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ReservationResponse>> getReservations(@RequestParam LocalDate date,
+                                                                     @RequestParam(required = false) UUID tableId) {
+
+        List<Reservation> reservations;
+        if (tableId != null) {
+            reservations = reservationService.getReservationsForTableAndDate(tableId, date);
+        } else {
+            reservations = reservationService.getReservationsForDate(date);
+        }
+
+        List<ReservationResponse> response = reservations.stream()
+                .map(ReservationResponse::from)
+                .toList();
+
+        return ResponseEntity.ok(response);
     }
 }
