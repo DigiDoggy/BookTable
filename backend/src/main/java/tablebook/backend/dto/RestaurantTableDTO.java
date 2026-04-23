@@ -1,6 +1,6 @@
 package tablebook.backend.dto;
 
-import tablebook.backend.entity.RestaurantTable;
+import tablebook.backend.entity.BookingTable;
 import tablebook.backend.enums.Zone;
 
 
@@ -15,7 +15,7 @@ public record RestaurantTableDTO(
         boolean privacy,
         boolean occupied
 ) {
-    public static RestaurantTableDTO toDTO(RestaurantTable table) {
+    public static RestaurantTableDTO toDTO(BookingTable table) {
         return new RestaurantTableDTO(
                 table.getTableNumber(),
                 table.getCapacity(),

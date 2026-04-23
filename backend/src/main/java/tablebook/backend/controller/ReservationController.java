@@ -2,17 +2,13 @@ package tablebook.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tablebook.backend.dto.request.CreateReservationRequest;
 import tablebook.backend.dto.response.ReservationResponse;
 import tablebook.backend.entity.Reservation;
 import tablebook.backend.service.ReservationService;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -24,10 +20,21 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<ReservationResponse> createReservation(@RequestBody CreateReservationRequest request) {
         Reservation reservation = reservationService.createReservation(request);
+
+        URI location = URI.create("/reservations/" + reservation.getId());
+        return ResponseEntity.created(location)
+                .body(ReservationResponse.from(reservation));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ReservationResponse> getReservation(@PathVariable UUID id) {
+        Reservation reservation = reservationService.getReservationById(id);
+
         return ResponseEntity.ok(ReservationResponse.from(reservation));
+
     }
 
     @GetMapping

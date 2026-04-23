@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tablebook.backend.dto.request.CreateReservationRequest;
 import tablebook.backend.entity.Reservation;
-import tablebook.backend.entity.RestaurantTable;
+import tablebook.backend.entity.BookingTable;
 import tablebook.backend.entity.User;
-import tablebook.backend.enums.ReservationStatus;
+import tablebook.backend.enums.BookingStatus;
 import tablebook.backend.repository.ReservationRepository;
 import tablebook.backend.repository.RestaurantTableRepository;
 import tablebook.backend.repository.UserRepository;
@@ -14,6 +14,7 @@ import tablebook.backend.repository.UserRepository;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -28,7 +29,7 @@ public class ReservationService {
         User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        RestaurantTable table = tableRepository.findById(request.tableId())
+        BookingTable table = tableRepository.findById(request.tableId())
                 .orElseThrow(() -> new RuntimeException("Table not found"));
 
         if (request.peopleCount() > table.getCapacity()) {
@@ -56,7 +57,7 @@ public class ReservationService {
         reservation.setReservationDate(request.date());
         reservation.setReservationTime(startTime);
         reservation.setReservationEndTime(endTime);
-        reservation.setStatus(ReservationStatus.CONFIRMED);
+        reservation.setStatus(BookingStatus.CONFIRMED);
         reservation.setPreferences(request.preferences());
 
         return reservationRepository.save(reservation);
@@ -90,5 +91,10 @@ public class ReservationService {
             return false;
         }
         return !start1.isAfter(end2) && !end1.isBefore(start2);
+    }
+
+    public Reservation getReservationById(UUID id) {
+       return reservationRepository.findById(id)
+               .orElseThrow( () -> new RuntimeException("Reservation not found"));
     }
 }

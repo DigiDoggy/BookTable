@@ -14,8 +14,8 @@ import java.util.UUID;
 
 @Entity
 @Data
-@jakarta.persistence.Table(name = "tables")
-public class RestaurantTable {
+@Table(name = "tables")
+public class BookingTable {
 
     @Id
     @UuidGenerator

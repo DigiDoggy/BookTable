@@ -1,7 +1,7 @@
 package tablebook.backend.dto.response;
 
 import tablebook.backend.entity.Reservation;
-import tablebook.backend.enums.ReservationStatus;
+import tablebook.backend.enums.BookingStatus;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,7 +15,7 @@ public record ReservationResponse(
         LocalDate reservationDate,
         LocalTime reservationTime,
         LocalTime reservationEndTime,
-        ReservationStatus status,
+        BookingStatus status,
         String preferences
 ) {
 

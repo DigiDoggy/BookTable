@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.UuidGenerator;
-import tablebook.backend.enums.ReservationStatus;
+import tablebook.backend.enums.BookingStatus;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -32,7 +32,7 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
     @JoinColumn(name = "table_id")
-    private RestaurantTable table;
+    private BookingTable table;
 
     @NotNull
     @Column(name = "reservation_date", nullable = false)
@@ -47,7 +47,7 @@ public class Reservation {
 
     @Column(name = "reservation_status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private ReservationStatus status;
+    private BookingStatus status;
 
     @Column(name = "preferences", nullable = false)
     private String preferences;

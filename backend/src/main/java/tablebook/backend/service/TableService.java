@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import tablebook.backend.dto.RestaurantTableDTO;
 import tablebook.backend.dto.request.ClientRecommendationRequest;
 import tablebook.backend.dto.response.RestaurantTableResponse;
-import tablebook.backend.entity.RestaurantTable;
+import tablebook.backend.entity.BookingTable;
 import tablebook.backend.enums.Zone;
 import tablebook.backend.repository.RestaurantTableRepository;
 
@@ -27,14 +27,14 @@ public class TableService {
     // that coming when user wrote date and time
     public RestaurantTableResponse getTables(ClientRecommendationRequest request) {
 
-        List<RestaurantTable> tables = tableRepository.findAll();
+        List<BookingTable> tables = tableRepository.findAll();
 
-        List<RestaurantTable> freeTables = getFreeTables(request.time(), request.date(), tables);
+        List<BookingTable> freeTables = getFreeTables(request.time(), request.date(), tables);
         // creating recommendation score for request
         calculateRecommendationScore(freeTables, request);
 
-        List<RestaurantTable> recommendationTables = getRecommendation(request.zone(), request.numberOfPeople(), freeTables);
-        List<RestaurantTable> occupiedTables = getOccupiedTables(tables);
+        List<BookingTable> recommendationTables = getRecommendation(request.zone(), request.numberOfPeople(), freeTables);
+        List<BookingTable> occupiedTables = getOccupiedTables(tables);
 
         //mapping to dto
 
@@ -58,7 +58,7 @@ public class TableService {
 
     // I'm just improvising with my workload here.
     //It depends on the booking time and date.
-    private List<RestaurantTable> getFreeTables(LocalTime time, LocalDate date, List<RestaurantTable> tables) {
+    private List<BookingTable> getFreeTables(LocalTime time, LocalDate date, List<BookingTable> tables) {
 
         if (initialized) {
             return tables.stream()
@@ -87,7 +87,7 @@ public class TableService {
 
 
 
-        for (RestaurantTable table : tables) {
+        for (BookingTable table : tables) {
             if (random.nextDouble() < loadIndex) {
                 table.setOccupied(true);
             }
@@ -107,30 +107,30 @@ public class TableService {
     }
 
     //get recommendation tables
-    private List<RestaurantTable> getRecommendation(Zone zone,
-                                                    int peopleCount,
-                                                    List<RestaurantTable> tables) {
+    private List<BookingTable> getRecommendation(Zone zone,
+                                                 int peopleCount,
+                                                 List<BookingTable> tables) {
 
 
         return tables.stream()
                 .filter(table -> table.getZone().equals(zone))
                 .filter(table -> table.getCapacity() >= peopleCount)
-                .sorted(Comparator.comparingInt(RestaurantTable::getScore).reversed()
-                        .thenComparing(RestaurantTable::getCapacity))
+                .sorted(Comparator.comparingInt(BookingTable::getScore).reversed()
+                        .thenComparing(BookingTable::getCapacity))
                 .limit(3)
                 .toList();
     }
 
     //get occupied tables
-    private List<RestaurantTable> getOccupiedTables(List<RestaurantTable> tables) {
+    private List<BookingTable> getOccupiedTables(List<BookingTable> tables) {
         return tables.stream()
-                .filter(RestaurantTable::isOccupied)
+                .filter(BookingTable::isOccupied)
                 .toList();
     }
 
     //can implement if create logic of coordinate
-    private int calculateRecommendationScore(List<RestaurantTable> tables, ClientRecommendationRequest request) {
-      for (RestaurantTable table : tables) {
+    private int calculateRecommendationScore(List<BookingTable> tables, ClientRecommendationRequest request) {
+      for (BookingTable table : tables) {
           int score = 0;
 
           //cheking zone

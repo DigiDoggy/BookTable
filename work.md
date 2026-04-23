@@ -31,3 +31,6 @@ See detailed booking rules in [booking-rules.md](docs/booking-rules.md).
 - Extended reservation repository with date and table+date queries.
 - Added Docker Compose setup for Postgres and app service.
 - Added Dockerfile placeholder for app containerization.
+
+# 23.04
+- Added GlobalExceptionHandler.
