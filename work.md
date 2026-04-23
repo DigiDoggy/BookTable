@@ -34,3 +34,4 @@ See detailed booking rules in [booking-rules.md](docs/booking-rules.md).
 
 # 23.04
 - Added GlobalExceptionHandler.
+- Rewritten service layer (exceptions)
