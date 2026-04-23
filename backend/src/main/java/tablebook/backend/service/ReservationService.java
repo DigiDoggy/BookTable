@@ -7,6 +7,8 @@ import tablebook.backend.entity.Reservation;
 import tablebook.backend.entity.BookingTable;
 import tablebook.backend.entity.User;
 import tablebook.backend.enums.BookingStatus;
+import tablebook.backend.exceptions.CrmErrorMessage;
+import tablebook.backend.exceptions.CrmException;
 import tablebook.backend.repository.ReservationRepository;
 import tablebook.backend.repository.RestaurantTableRepository;
 import tablebook.backend.repository.UserRepository;
@@ -25,15 +27,16 @@ public class ReservationService {
     private final UserRepository userRepository;
     private final RestaurantTableRepository tableRepository;
 
+    //post request
     public Reservation createReservation(CreateReservationRequest request) {
         User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new CrmException(CrmErrorMessage.USER_NOT_FOUND));
 
         BookingTable table = tableRepository.findById(request.tableId())
-                .orElseThrow(() -> new RuntimeException("Table not found"));
+                .orElseThrow(() -> new CrmException(CrmErrorMessage.TABLE_NOT_FOUND));
 
         if (request.peopleCount() > table.getCapacity()) {
-            throw new RuntimeException("People count is greater than table capacity");
+           throw new CrmException(CrmErrorMessage.PEOPLE_COUNT_EXCEEDS_CAPACITY);
         }
 
         LocalTime startTime = request.time();
@@ -46,7 +49,7 @@ public class ReservationService {
             if (isOverlapping(startTime, endTime,
                     existingReservation.getReservationTime(),
                     existingReservation.getReservationEndTime())) {
-                throw new RuntimeException("Table is not available at this time");
+                throw new CrmException(CrmErrorMessage.TABLE_NOT_AVAILABLE);
             }
         }
 
@@ -62,6 +65,18 @@ public class ReservationService {
 
         return reservationRepository.save(reservation);
     }
+
+    //get request
+    public Reservation getReservationById(UUID id) {
+        return reservationRepository.findById(id)
+                .orElseThrow( () -> new CrmException(CrmErrorMessage.RESERVATION_NOT_FOUND));
+    }
+
+    //get all Reservations for calendar
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
+    }
+
 
     public List<Reservation> getReservationsForDate(LocalDate date) {
         return reservationRepository.findByReservationDate(date);
@@ -93,8 +108,4 @@ public class ReservationService {
         return !start1.isAfter(end2) && !end1.isBefore(start2);
     }
 
-    public Reservation getReservationById(UUID id) {
-       return reservationRepository.findById(id)
-               .orElseThrow( () -> new RuntimeException("Reservation not found"));
-    }
 }

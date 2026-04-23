@@ -20,15 +20,19 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
+    //create reservation
     @PostMapping()
     public ResponseEntity<ReservationResponse> createReservation(@RequestBody CreateReservationRequest request) {
         Reservation reservation = reservationService.createReservation(request);
 
         URI location = URI.create("/reservations/" + reservation.getId());
+
+        //response with link to reservation
         return ResponseEntity.created(location)
                 .body(ReservationResponse.from(reservation));
     }
 
+    //get reservation by id
     @GetMapping("/{id}")
     public ResponseEntity<ReservationResponse> getReservation(@PathVariable UUID id) {
         Reservation reservation = reservationService.getReservationById(id);
@@ -37,16 +41,17 @@ public class ReservationController {
 
     }
 
+    // geet all reservation date. Client can choose tableId to get reservations for a specific table
     @GetMapping
     public ResponseEntity<List<ReservationResponse>> getReservations(@RequestParam LocalDate date,
                                                                      @RequestParam(required = false) UUID tableId) {
-
         List<Reservation> reservations;
         if (tableId != null) {
             reservations = reservationService.getReservationsForTableAndDate(tableId, date);
         } else {
             reservations = reservationService.getReservationsForDate(date);
         }
+
 
         List<ReservationResponse> response = reservations.stream()
                 .map(ReservationResponse::from)

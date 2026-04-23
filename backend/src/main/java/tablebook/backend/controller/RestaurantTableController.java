@@ -19,8 +19,9 @@ public class RestaurantTableController {
 
     private final TableService tableService;
 
+    //get all free tables
     @GetMapping()
-    public ResponseEntity<RestaurantTableResponse> getTables(@RequestBody ClientRecommendationRequest request) {
+    public ResponseEntity<RestaurantTableResponse> getAllFreeTables(@RequestBody ClientRecommendationRequest request) {
         return ResponseEntity.ok(tableService.getTables(request));
     }
 

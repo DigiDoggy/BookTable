@@ -45,6 +45,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private UserRole role;
+
+    //TODO (orders some list...) for AI: The system analyzes customer preferences based on their orders and generates personalized recommendations.
+    // When the menu is updated, each customer receives individual offers with dishes they are highly likely to enjoy.
+
+    private String orders;
 }
 
 
