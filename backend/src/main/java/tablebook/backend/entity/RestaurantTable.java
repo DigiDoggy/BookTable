@@ -15,7 +15,7 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "tables")
-public class BookingTable {
+public class RestaurantTable {
 
     @Id
     @UuidGenerator

@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.UuidGenerator;
 import tablebook.backend.enums.UserRole;
-import tablebook.backend.enums.Zone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +25,19 @@ public class User {
     private List<Reservation> reservations = new ArrayList<>();
 
     @NotBlank
-    @Column(name = "username")
-    private String username;
+    @Column(name = "user_name")
+    private String userName;
 
     @NotBlank
-    @Column(name = "zone", nullable = false)
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "user_role", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Zone Zone;
+    private UserRole role = UserRole.USER;
+
+    @Column(name = "like_zone")
+    private List<String> zones;
 
     @NotBlank
     @Column(name = "email", unique = true)
@@ -42,9 +47,6 @@ public class User {
     @Column(name = "phone", unique = true)
     private String phone;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private UserRole role;
 
     //TODO (orders some list...) for AI: The system analyzes customer preferences based on their orders and generates personalized recommendations.
     // When the menu is updated, each customer receives individual offers with dishes they are highly likely to enjoy.

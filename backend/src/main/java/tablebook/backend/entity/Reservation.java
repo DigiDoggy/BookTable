@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "reservations")
+@jakarta.persistence.Table(name = "reservations")
 public class Reservation {
 
     @Id
@@ -32,7 +32,7 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
     @JoinColumn(name = "table_id")
-    private BookingTable table;
+    private RestaurantTable table;
 
     @NotNull
     @Column(name = "reservation_date", nullable = false)

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tablebook.backend.dto.request.CreateReservationRequest;
 import tablebook.backend.entity.Reservation;
-import tablebook.backend.entity.BookingTable;
+import tablebook.backend.entity.RestaurantTable;
 import tablebook.backend.entity.User;
 import tablebook.backend.enums.BookingStatus;
 import tablebook.backend.exceptions.CrmErrorMessage;
@@ -16,7 +16,6 @@ import tablebook.backend.repository.UserRepository;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -32,7 +31,7 @@ public class ReservationService {
         User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new CrmException(CrmErrorMessage.USER_NOT_FOUND));
 
-        BookingTable table = tableRepository.findById(request.tableId())
+        RestaurantTable table = tableRepository.findById(request.tableId())
                 .orElseThrow(() -> new CrmException(CrmErrorMessage.TABLE_NOT_FOUND));
 
         if (request.peopleCount() > table.getCapacity()) {
