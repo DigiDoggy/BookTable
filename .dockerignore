@@ -1,0 +1,24 @@
+# Git
+.git
+.gitattributes
+
+# Maven
+target
+.mvn
+mvnw
+mvnw.cmd
+
+# Environment
+.env
+
+# macOS
+.DS_Store
+
+# Documentation
+docs
+*.md
+!README.md
+
+# Docker
+.dockerignore
+Dockerfile
