@@ -3,6 +3,7 @@ package tablebook.backend.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.DispatcherServlet;
 import tablebook.backend.dto.request.CreateReservationRequest;
 import tablebook.backend.dto.response.ReservationResponse;
 import tablebook.backend.entity.Reservation;

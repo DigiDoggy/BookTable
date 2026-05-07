@@ -1,0 +1,65 @@
+.app {
+  width: 100%;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #000;
+}
+
+.imageFrame {
+  position: relative;
+  width: min(100vw, calc(100svh * 1.5));
+  aspect-ratio: 3 / 2;
+}
+
+.mainImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.menuHotspot {
+  --hotspot-left: 5.6%;
+  --hotspot-top: 24.4%;
+  --hotspot-width: 27.7%;
+  --hotspot-height: 67.5%;
+  position: absolute;
+  left: var(--hotspot-left);
+  top: var(--hotspot-top);
+  width: var(--hotspot-width);
+  height: var(--hotspot-height);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  border-radius: 10px;
+  font-size: clamp(10px, 1vw, 14px);
+  cursor: pointer;
+}
+
+ .menuHotspot:hover {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+@media (max-width: 768px) {
+  .app {
+    background: #fff;
+  }
+
+  .imageFrame {
+    display: none;
+  }
+}
+
+@media (max-width: 420px), (max-height: 500px) {
+  .app {
+    background: #fff;
+  }
+
+  .imageFrame {
+    display: none;
+  }
+}
