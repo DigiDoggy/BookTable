@@ -25,4 +25,8 @@ public class RestaurantTableController {
         return ResponseEntity.ok(tableService.getTables(request));
     }
 
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("Hello World");
+    }
 }

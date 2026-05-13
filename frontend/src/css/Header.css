@@ -1,0 +1,20 @@
+.arrow-btn {
+    width: 38px;
+    height: 38px;
+
+    position: relative;
+    top: 0;
+    left: 0;
+    background-image: url("../assets/TopDrawer/OpenBar_NoCursor.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    mix-blend-mode: multiply;
+    border: none;
+    cursor: pointer;
+}
+
+.arrow-btn:hover {
+    background-image: url("../assets/TopDrawer/OpenBar_OnCursor.png");
+}

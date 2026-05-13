@@ -28,7 +28,7 @@
   --tl-y: 26.46%;
   --tr-x: 30.66%;
   --tr-y: 27.49%;
-  --br-x: 33.20%;
+  --br-x: 33.2%;
   --br-y: 86.57%;
   --bl-x: 8.85%;
   --bl-y: 89.16%;
@@ -51,13 +51,33 @@
 
 .doorHotspot {
   --tl-x: 44.27%;
-  --tl-y: 16.80%;
+  --tl-y: 16.8%;
   --tr-x: 60.74%;
-  --tr-y: 16.80%;
+  --tr-y: 16.8%;
   --br-x: 60.74%;
   --br-y: 81.59%;
   --bl-x: 44.27%;
   --bl-y: 81.54%;
+}
+
+.footer {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
 }
 
 .menuHotspot:hover,
